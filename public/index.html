@@ -7,18 +7,24 @@
     <title>BSC ChainText</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.2/ethers.umd.min.js"></script>
 </head>
 
 <body>
     <div class="container">
         <div class="card">
-            <h1>BSC ChainText</h1>
+            <div class="header-row" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h1 style="margin: 0;">BSC ChainText</h1>
+                <button id="connectWalletBtn" class="connect-btn">Connect Wallet</button>
+            </div>
+            <div id="walletAddress" style="text-align: right; margin-bottom: 20px; font-size: 0.9em; color: #666; display: none;"></div>
             <div class="home-menu">
                 <a href="write.html" class="menu-btn">Write Message</a>
                 <a href="read.html" class="menu-btn">Read Message</a>
             </div>
         </div>
     </div>
+    <script src="script.js"></script>
 </body>
 
 </html>

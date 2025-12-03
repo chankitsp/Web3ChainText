@@ -13,15 +13,9 @@ app.use(express.static('public'));
 
 const PORT = process.env.PORT || 3000;
 const RPC_URL = process.env.BSC_RPC_URL || 'https://bsc-dataseed.binance.org/';
-const PRIVATE_KEY = process.env.PRIVATE_KEY;
-
-if (!PRIVATE_KEY) {
-    console.error("ERROR: PRIVATE_KEY is missing in .env file");
-    process.exit(1);
-}
-
 const provider = new ethers.JsonRpcProvider(RPC_URL);
-const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
+// Wallet is no longer needed on server side
+// const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
 
 // Encryption Helper
 function encrypt(text, password) {
@@ -61,7 +55,8 @@ function decrypt(hexData, password) {
 }
 
 // API: Write Message
-app.post('/api/write', async (req, res) => {
+// API: Encrypt Message (for client-side signing)
+app.post('/api/encrypt', async (req, res) => {
     try {
         const { message, password } = req.body;
         if (!message || !password) {
@@ -70,14 +65,8 @@ app.post('/api/write', async (req, res) => {
 
         const encryptedHex = encrypt(message, password);
 
-        // Send transaction to self with data
-        const tx = await wallet.sendTransaction({
-            to: wallet.address,
-            value: 0,
-            data: encryptedHex
-        });
-
-        res.json({ success: true, txHash: tx.hash });
+        // Return encrypted data to client so they can sign the transaction
+        res.json({ success: true, data: encryptedHex });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: error.message });

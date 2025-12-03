@@ -7,12 +7,29 @@
     <title>Write Message - BSC ChainText</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.2/ethers.umd.min.js"></script>
 </head>
 
 <body>
     <div class="container">
         <div class="card">
+            <div class="header-row"
+                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h1 style="margin: 0;">Write Message</h1>
+                <button id="connectWalletBtn" class="connect-btn">Connect Wallet</button>
+            </div>
+            <div id="walletAddress"
+                style="text-align: right; margin-bottom: 20px; font-size: 0.9em; color: #666; display: none;"></div>
             <h1>Write Message</h1>
+
+            <div id="deployContainer"
+                style="display: none; text-align: center; margin-bottom: 20px; padding: 20px; background: rgba(245, 158, 11, 0.1); border: 1px solid #f59e0b; border-radius: 8px;">
+                <p style="margin-bottom: 10px; color: #fbbf24;">⚠️ Network Restriction Detected</p>
+                <p style="margin-bottom: 15px; font-size: 0.9em;">This network requires a contract to store data.</p>
+                <button id="deployBtn" class="connect-btn" style="width: 100%; background: #f59e0b;">Deploy Storage
+                    Contract</button>
+            </div>
+
             <form id="writeForm">
                 <div class="form-group">
                     <label for="message">Message</label>
